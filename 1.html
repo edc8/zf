@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>收银台</title>
+    <style>
+       .hidden {
+            display: none;
+        }
+       .aspect-8-12 {
+            aspect-ratio: 8 / 12;
+        }
+       .w-full.h-full.object-cover {
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-6">速达开锁</h1>
+        <div class="flex flex-col items-center space-y-4">
+            <div class="w-full bg-gray-200 rounded-md overflow-hidden aspect-8-12">
+                <img id="wechat-qr" src="https://preview.cloud.189.cn/image/imageAction?param=2C623A28E0F5BFB747CFE7777ADDAB040B45177EA79E105C65AF300BA3A569B06F5013B387E91A0E5F786FEBA9538A73A454BDC9CFA9D8F74366EF135E445AADE0EF99DECB232AD8986431B1DB74AB2E37578986780D0FBA0B23EFF9CFF5A91CB222D7ED59992CDE00915A0C50078AD8" alt="微信收款码" class="w-full h-full object-cover">
+                <img id="alipay-qr" src="https://preview.cloud.189.cn/image/imageAction?param=31AA385C8577EE97F6E0883636F8EC4F6A234442A3890A5647D7BCBEEDE204E514F39C93B6A9F4BA15DC40E3F2EFA37130BE724B94EF383AAE2894E6286E56CD436325871B8EA7F353B20F799D95A847F8E9CFE48F4E0A44F9AE5E8850794D1743D8212588CBE76EBC2D93E2D4D76CC7" alt="支付宝收款码" class="w-full h-full object-cover hidden">
+            </div>
+            <p class="text-lg text-gray-700">请使用扫码工具扫描上方收款码完成支付</p>
+            <button id="toggle-btn" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300">
+                切换到支付宝
+            </button>
+        </div>
+    </div>
+    <script>
+        const wechatQr = document.getElementById('wechat-qr');
+        const alipayQr = document.getElementById('alipay-qr');
+        const toggleBtn = document.getElementById('toggle-btn');
+
+        toggleBtn.addEventListener('click', function () {
+            if (wechatQr.classList.contains('hidden')) {
+                wechatQr.classList.remove('hidden');
+                alipayQr.classList.add('hidden');
+                toggleBtn.textContent = '支付宝';
+            } else {
+                wechatQr.classList.add('hidden');
+                alipayQr.classList.remove('hidden');
+                toggleBtn.textContent = '微信';
+            }
+        });
+    </script>
+</body>
+
+</html>
+    
