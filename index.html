@@ -1,105 +1,123 @@
 <!DOCTYPE html>
-<html lang="zh-CN" manifest="cache.manifest">
-<!-- 关键添加：manifest 属性指定缓存清单文件 -->
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-    <title>收银台</title>
+    
+    <!-- 预连接优化（必须添加） -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://preview.cloud.189.cn">
+    
+    <!-- 内联关键样式（防止页面闪烁） -->
     <style>
-       .hidden {
-            display: none;
+        /* 保证页面基本样式 */
+        .hidden { display: none; }
+        body { 
+            margin: 0; 
+            background: #f3f4f6; 
+            font-family: sans-serif;
         }
-       .aspect-8-12 {
-            aspect-ratio: 8 / 12;
+        .container { 
+            max-width: 28rem; 
+            margin: 0 auto; 
+            padding: 1rem; 
         }
-       .w-full.h-full.object-cover {
-            object-fit: cover;
+        .qr-container { 
+            aspect-ratio: 8/12; 
+            background: #e5e7eb; 
+            border-radius: 0.5rem; 
+            overflow: hidden; 
+        }
+        .qr-container img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        .btn { 
+            background: #3b82f6; 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            border: none; 
+            border-radius: 0.375rem; 
+            cursor: pointer; 
         }
     </style>
+    
+    <title>速达开锁收银台</title>
+    
+    <!-- 异步加载Tailwind（重要优化） -->
+    <script>
+        // 页面加载后异步加载Tailwind
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.tailwindcss.com';
+                document.head.appendChild(script);
+            }, 100); // 延迟100ms加载
+        });
+    </script>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center mb-6">速达开锁</h1>
-        <div class="flex flex-col items-center space-y-4">
-            <div class="w-full bg-gray-200 rounded-md overflow-hidden aspect-8-12">
-                <img id="wechat-qr" src="https://preview.cloud.189.cn/image/imageAction?param=2C623A28E0F5BFB747CFE7777ADDAB040B45177EA79E105C65AF300BA3A569B06F5013B387E91A0E5F786FEBA9538A73A454BDC9CFA9D8F74366EF135E445AADE0EF99DECB232AD8986431B1DB74AB2E37578986780D0FBA0B23EFF9CFF5A91CB222D7ED59992CDE00915A0C50078AD8" alt="微信收款码" class="w-full h-full object-cover">
-                <img id="alipay-qr" src="https://preview.cloud.189.cn/image/imageAction?param=31AA385C8577EE97F6E0883636F8EC4F6A234442A3890A5647D7BCBEEDE204E514F39C93B6A9F4BA15DC40E3F2EFA37130BE724B94EF383AAE2894E6286E56CD436325871B8EA7F353B20F799D95A847F8E9CFE48F4E0A44F9AE5E8850794D1743D8212588CBE76EBC2D93E2D4D76CC7" alt="支付宝收款码" class="w-full h-full object-cover hidden">
+<body>
+    <div class="container">
+        <h1 style="text-align: center; font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">
+            速达开锁
+        </h1>
+        
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div class="qr-container">
+                <img id="wechat-qr" 
+                     src="https://preview.cloud.189.cn/image/imageAction?param=2C623A28E0F5BFB747CFE7777ADDAB040B45177EA79E105C65AF300BA3A569B06F5013B387E91A0E5F786FEBA9538A73A454BDC9CFA9D8F74366EF135E445AADE0EF99DECB232AD8986431B1DB74AB2E37578986780D0FBA0B23EFF9CFF5A91CB222D7ED59992CDE00915A0C50078AD8" 
+                     alt="微信收款码" 
+                     width="400" 
+                     height="600">
+                     
+                <img id="alipay-qr" 
+                     src="https://preview.cloud.189.cn/image/imageAction?param=31AA385C8577EE97F6E0883636F8EC4F6A234442A3890A5647D7BCBEEDE204E514F39C93B6A9F4BA15DC40E3F2EFA37130BE724B94EF383AAE2894E6286E56CD436325871B8EA7F353B20F799D95A847F8E9CFE48F4E0A44F9AE5E8850794D1743D8212588CBE76EBC2D93E2D4D76CC7" 
+                     alt="支付宝收款码" 
+                     class="hidden"
+                     width="400" 
+                     height="600">
             </div>
-            <p class="text-lg text-gray-700">速达开锁换锁刻章</p>
-            <button id="toggle-btn" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300">
+            
+            <p style="font-size: 1.125rem; color: #374151;">
+                速达开锁换锁刻章
+            </p>
+            
+            <button id="toggle-btn" class="btn">
                 支付宝
             </button>
         </div>
     </div>
 
-    <!-- 缓存状态提示（可选，用于显示缓存状态） -->
-    <div id="cache-status" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-md text-sm hidden">
-        正在缓存页面资源...
-    </div>
-
+    <!-- 延迟加载 Font Awesome -->
     <script>
-        const wechatQr = document.getElementById('wechat-qr');
-        const alipayQr = document.getElementById('alipay-qr');
-        const toggleBtn = document.getElementById('toggle-btn');
-        const cacheStatus = document.getElementById('cache-status');
+        window.addEventListener('load', function() {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
+            document.head.appendChild(link);
+        });
+    </script>
 
-        // 原切换功能保持不变
-        toggleBtn.addEventListener('click', function () {
-            if (wechatQr.classList.contains('hidden')) {
-                wechatQr.classList.remove('hidden');
-                alipayQr.classList.add('hidden');
-                toggleBtn.textContent = '支付宝';
+    <!-- 切换功能 -->
+    <script>
+        document.getElementById('toggle-btn').addEventListener('click', function() {
+            var wechatImg = document.getElementById('wechat-qr');
+            var alipayImg = document.getElementById('alipay-qr');
+            var btn = this;
+            
+            if (wechatImg.classList.contains('hidden')) {
+                wechatImg.classList.remove('hidden');
+                alipayImg.classList.add('hidden');
+                btn.textContent = '支付宝';
             } else {
-                wechatQr.classList.add('hidden');
-                alipayQr.classList.remove('hidden');
-                toggleBtn.textContent = '微信';
+                wechatImg.classList.add('hidden');
+                alipayImg.classList.remove('hidden');
+                btn.textContent = '微信';
             }
         });
-
-        // 缓存相关事件监听（可选，用于反馈缓存状态）
-        if ('applicationCache' in window) {
-            const appCache = window.applicationCache;
-
-            // 缓存更新事件
-            appCache.addEventListener('updateready', function () {
-                cacheStatus.textContent = '缓存已更新，将重新加载页面';
-                cacheStatus.classList.remove('hidden');
-                // 切换到新缓存版本
-                appCache.swapCache();
-                // 重新加载页面以使用新缓存
-                setTimeout(() => window.location.reload(), 1500);
-            });
-
-            // 缓存下载中
-            appCache.addEventListener('downloading', function () {
-                cacheStatus.textContent = '正在缓存页面资源...';
-                cacheStatus.classList.remove('hidden');
-            });
-
-            // 缓存完成
-            appCache.addEventListener('cached', function () {
-                cacheStatus.textContent = '缓存完成，支持离线访问';
-                setTimeout(() => cacheStatus.classList.add('hidden'), 2000);
-            });
-
-            // 缓存错误
-            appCache.addEventListener('error', function (e) {
-                cacheStatus.textContent = '缓存失败，请检查网络';
-                setTimeout(() => cacheStatus.classList.add('hidden'), 3000);
-                console.error('缓存错误:', e);
-            });
-
-            // 无需更新
-            appCache.addEventListener('noupdate', function () {
-                cacheStatus.textContent = '当前已是最新版本';
-                setTimeout(() => cacheStatus.classList.add('hidden'), 1500);
-            });
-        }
     </script>
 </body>
-
 </html>
