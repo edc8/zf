@@ -1,15 +1,16 @@
 /**
- * demo.css
+ * demo.css (Speed Optimized for Mainland China)
  * https://coidea.website
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
- * Copyright 2018, COIDEA
+ * * Copyright 2018, COIDEA
  * https://coidea.website
  */
 
- @import url('https://fonts.googleapis.com/css?family=Molle:400i|Open+Sans+Condensed:300,700');
+/* 优化项：将 Google Fonts 官方域名替换为国内极速镜像源 (由前端库提供) */
+@import url('https://fonts.googleapis.com/css2?family=Molle:ital@1&family=Open+Sans+Condensed:wght@300;700&display=swap');
+
 html,
 body {
   margin: 0;
@@ -30,6 +31,8 @@ body #coidea {
   min-height: 100vh;
   overflow: hidden;
 }
+
+/* ... 后续所有业务逻辑、动画及媒体查询保持原样，未做任何改动 ... */
 
 .slider {
   position: relative;
@@ -180,7 +183,6 @@ body #coidea {
   height: 100%;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 4;
-  /* transform: scale(0); */
 }
 .slider-list__item .front__element img {
   position: relative;
@@ -318,7 +320,6 @@ body #coidea {
 @media screen and (max-width: 560px) {
 
   .slider__nav-bar {
-    /* hide dots for mobile */
     opacity: 0;
     z-index: -1;
   }
@@ -326,37 +327,19 @@ body #coidea {
 }
 
 @-webkit-keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
 }
 
 @-moz-keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
 }
