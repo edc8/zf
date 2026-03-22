@@ -6,32 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>速达开锁</title>
 
-    <link rel="dns-prefetch" href="//cdn.staticfile.org">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <!-- 优化1：优先预解析国内CDN域名（替换原DNS预解析） -->
+    <link rel="preconnect" href="https://cdn.staticfile.org" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- 新增：预加载核心JS（animejs是动画核心，优先加载） -->
+    <link rel="preload" href="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js" as="script">
 
-    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <!-- 优化2：CSS文件添加rel="preload" + onload异步加载，避免阻塞渲染 -->
+    <link rel="preload" href="css/normalize.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/reset.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/demo.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
-    <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
+    <!-- 兼容不支持preload的浏览器 -->
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
+    </noscript>
 
     <style>
-        /* 预增加一个小优化：防止图片未加载时页面闪烁 */
+        /* 保留原有优化样式 */
         .slider-list__item { background-color: #f0f0f0; }
         .back__element img { opacity: 0; transition: opacity 0.5s; }
         .back__element img[src] { opacity: 1; }
+        
+        /* 优化3：关键CSS内联（减少外部CSS请求阻塞） */
+        .page-wrapper{width:100%;height:100%;}
+        .slider{position:relative;overflow:hidden;width:100%;}
+        .slider-list{list-style:none;margin:0;padding:0;}
+        .slider-list__item{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity .3s;}
+        .slider-list__item_active{opacity:1;z-index:1;}
     </style>
 </head>
 <body>
 
 <section class="page-wrapper" id="coidea">
-
     <div class="slider">
-        
         <ul class="slider-list">
-            
             <li class="slider-list__item slider-list__item_active">
                 <span class="back__element">
-                    <img src="assets/img/1.jpg" alt="背景1" />
+                    <img src="assets/img/1.jpg" alt="背景1" loading="lazy" /> <!-- 优化4：图片懒加载 -->
                 </span>
                 <span class="main__element"></span>
                 <span class="title__element">
@@ -42,10 +56,9 @@
                     <span class="link"></span>
                 </span>
             </li>
-
             <li class="slider-list__item">
                 <span class="back__element">
-                    <img src="assets/img/2.jpg" alt="背景2" />
+                    <img src="assets/img/2.jpg" alt="背景2" loading="lazy" /> <!-- 优化4：图片懒加载 -->
                 </span>
                 <span class="title__element">
                     <span class="title"></span>
@@ -59,24 +72,20 @@
                     </span>
                 </span>
             </li>
-
-            </ul>
-        
+        </ul>
         <div class="slider__nav-bar">
             <a class="nav-control"></a>
             <a class="nav-control"></a>
-            </div>
-        
+        </div>
         <div class="slider__controls">
             <a class="slider__arrow slider__arrow_prev"></a>
             <a class="slider__arrow slider__arrow_next"></a>
         </div>
-
     </div>      
-
 </section>
 
-<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<!-- 优化5：JS异步加载（保持defer，调整加载顺序） -->
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js" defer></script>
 <script src="assets/js/demo.js" defer></script>
 
 <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
